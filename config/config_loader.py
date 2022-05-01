@@ -2,7 +2,7 @@ import configparser
 import os
 from typing import List
 
-config = configparser.RawConfigParser()
+config = configparser.ConfigParser()
 
 
 def _create_default_path_list(file_name: str) -> List[str]:
