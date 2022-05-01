@@ -24,6 +24,8 @@ from .forms import ContactForm
 from django.views.generic.edit import FormView
 from mapApp.airports.AirportArrivals import AirportArrivals
 
+from config.config_loader import read_config
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
     
@@ -123,7 +125,7 @@ class SpecificAirportView(TemplateView):
         
         #funzione che gestisce connessione all'api per mostrare il meteo attuale nella pagina
         def connect_to_openweather_api(self,latitude, longitude):
-            api_key = ""
+            api_key = read_config(section='openweather',value='key')
             lat = latitude
             lon = longitude
             #cerchiamo il tempo attuale nel luogo delle coordinate dell'aereoporto
@@ -151,8 +153,8 @@ class SpecificAirportView(TemplateView):
 
             data = {
             'grant_type': 'client_credentials',
-            'client_id': '',
-            'client_secret': ''
+            'client_id': read_config(section='autorouter-notam',value='client_id'),
+            'client_secret': read_config(section='autorouter-notam',value='client_secret')
             }
 
             auth_response = requests.post('https://api.autorouter.aero/v1.0/oauth2/token', data=data)
