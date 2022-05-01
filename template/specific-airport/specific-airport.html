@@ -1,0 +1,423 @@
+{% extends "transportation-base.html" %}
+{% load static %}
+{% load airports_extras %}
+{% load mathfilters %}
+
+{% block content %}
+{% block airport-header %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <meta http-equiv="refresh" content="300">
+         
+        
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons-wind.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+        
+       
+    </head>
+    <div class="container-flex">
+        <div class="side-panel">
+            <img class="picture-container" src="">
+            <div class="info">
+                <h4>{{airport.0.name}}</h4>
+                <br>
+                <div class="row">
+                    <div class="col-5"><p>Municipality</p></div>
+                    <div class="col-6"><p>{{airport.0.municipality}}</p></div>
+                </div>
+                <div class="row">
+                    <div class="col-5"><p>Country</p></div>
+                    <div class="col-6"><p>{{country.0.nicename}}</p></div>
+                </div>
+                {% with type=airport.0.type|capfirst %}
+                    <div class="row">
+                        <div class="col-5"><p>Type</p></div>
+                        <div class="col-6"><p>{{type|rimuoviTrattiniBassi}}</p></div>
+                    </div>
+                {% endwith %}
+                <div class="row">
+                    <div class="col-5"><p>Altitude</p></div>
+                    <div class="col-6"><p>
+                        {% if airport.0.elevation_ft != "" %}
+                            {{airport.0.elevation_ft}}ft/{{elevation_m}}m
+                        {% else %}
+                            N/A
+                        {% endif %}
+                        </p></div>
+                </div>
+                {% if  airport.0.wikipedia_link != "" %}
+                <div class="row">
+                    <div class="col-5"><p>Wikipedia link</p></div>
+                    <div class="col-6"><a href="{{airport.0.wikipedia_link}}" target="_blank">{{airport.0.name}}
+                        
+                        <span class="material-icons font-size-16">
+                        launch
+                        </span></a></div>
+                </div>
+                {% endif %}
+                
+
+                
+
+                
+                
+            </div>
+
+        </div>
+        <div class="central-area">
+            <div class="central-panel">
+                <div class="specific-airport-head">
+                    <div class="airport-name">
+                        
+                        <h1 class="airport-title airport-header">{{airport.0.name}} 
+                        
+                        </h1>
+                        <h5 class="airport-subtitle airport-header">{{airport.0.icao_code}}{% if airport.0.iata_code != "" %}/{{airport.0.iata_code}}
+                            {% endif %}</h5>
+                        
+                    </div>
+                    
+                    <div class="weather">
+                        <i class="wi wi-{{weather_icon}} weather-icon" data-toggle="tooltip" data-placement="top" title="{{weather_desc}}"></i>
+                        <p class="weather-value">{{airport_weather_temp}}</p>
+                        <p class="text-muted weather-text">WEATHER</p>
+                    </div>
+                    <div class="weather">
+                        {% if airport_weather_wind_beaufort == "na" %}
+                            <i class="wi wi-na weather-icon"></i>
+                        {% else %}
+                            <i class="wi wi-wind-beaufort-{{airport_weather_wind_beaufort}} weather-icon"></i>
+                        {% endif %}
+                        <p class="weather-value">{{airport_weather_wind_speed}} kts</p>
+                        <p class="text-muted weather-text">WIND</p>
+                    </div>
+                    <div class="weather">
+                        {% if airport_weather_wind_direction == "N/A" %}
+                            <i class="wi wi-na weather-icon"></i>
+                            <p class="weather-value">{{airport_weather_wind_direction}}</p>
+                        {% elif airport_weather_wind_direction == "VARIABLE" %}
+                            <i class="wi wi-refresh weather-icon"></i>
+                            <p class="weather-value">{{airport_weather_wind_direction}}</p>
+                        {% else %}
+                            <i class="wi wi-wind from-{{airport_weather_wind_direction}}-deg weather-icon"></i>
+                            <p class="weather-value">{{airport_weather_wind_direction}}°</p>
+                        {% endif %}
+                        <p class="text-muted weather-text">DIRECTION</p>
+                    </div>
+                    
+                </div>
+                <div>
+                    <nav class="navbar navbar-expand-lg navbar-menu">
+                        
+                        <button class="navbar-toggler navbar-toggler-airport-menu collapse-button ml-auto" type="button" data-toggle="collapse" data-target="#navbarAirportPageMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon">
+                            <span class="material-icons">
+                              menu
+                            </span>
+                          </span>
+                        </button>
+                  
+                        <div class="collapse navbar-collapse navbar-collapse-airport-menu navbar-center" id="navbarAirportPageMenu">
+                            <div class="btn-menu-container navb-wrap-l" id="btn-overview">
+                                <a  class="navbar-brand page-menu-button navb-l" href='{% url "general_airport" icao %}'>Overview</a>
+                            </div>
+                            <div class="btn-menu-container navb-wrap-r" id="btn-arrivals">
+                                <a  class="navbar-brand page-menu-button navb-r" href='{% url "specific_airport_arrivals" icao %}'>Arrivals</a>
+                            </div>
+                            <div class="btn-menu-container navb-wrap-r" id="btn-departures">
+                                <a  class="navbar-brand page-menu-button navb-r" href='{% url "specific_airport_departures" icao %}'>Departures</a>
+                            </div>
+                            <div class="btn-menu-container navb-wrap-r" id="btn-weather">
+                                <a  class="navbar-brand page-menu-button navb-r" href='{% url "specific_airport_weather" icao %}'>Weather</a>
+                            </div>
+                            <div class="btn-menu-container navb-wrap-r" id="btn-notam">
+                                <a  class="navbar-brand page-menu-button navb-r" href='{% url "specific_airport_notam" icao %}'>NOTAM</a>
+                            </div>
+                            
+                            
+                        </div>
+                      </nav>   
+                    <div class = "data-panel">
+                        {% if request.resolver_match.url_name == "general_airport" %}
+                            {% include "specific-airport/overview-specific-airport.html" %} 
+                        {% elif request.resolver_match.url_name == "specific_airport_weather" %}
+                            {% include "specific-airport/weather-specific-airport.html" %}  
+                        {% elif request.resolver_match.url_name == "specific_airport_notam" %}
+                            {% include "specific-airport/notam-specific-airport.html" %} 
+                        {% elif request.resolver_match.url_name == "specific_airport_arrivals" %}
+                            {% include "specific-airport/arrivals-specific-airport.html" %}
+                        {% elif request.resolver_match.url_name == "specific_airport_departures" %}
+                            <br>
+                                <h1 class = "airport-title airport-section-title">Live Departures</h1>
+                                <br>
+                        {% endif %}
+                    </div>
+                    
+    
+                </div>
+                
+            </div>
+            {% if request.resolver_match.url_name == "general_airport" %}
+                <div class="map-panel">
+                    <div id="map"></div>
+                </div>
+            {% endif %}
+        </div>
+        
+    </div>
+    
+    <script
+			  src="https://code.jquery.com/jquery-3.5.1.js"
+			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			  crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    {% if request.resolver_match.url_name == "general_airport" %}
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibW9tZW50aW5vIiwiYSI6ImNrZDY4MTA0MjA0YnkycXZxY3lhOW9sZDAifQ.24IDm5I7rthl_p-r7WPFww';
+        var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/momentino/cklffw8vi6poy17rz63q6xcrz', // style URL
+        center: ["{{airport.0.longitude_deg|safe}}", "{{airport.0.latitude_deg|safe}}"], // starting position [lng, lat]
+        zoom: 9 // starting zoom
+        });
+
+        map.on('load', function () {
+            // Add an image to use as a custom marker
+            map.loadImage(
+                'https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
+                function (error, image) {
+                    if (error) throw error;
+                    map.addImage('custom-marker', image);
+                    // Add a GeoJSON source with 2 points
+                    map.addSource('points', {
+                        'type': 'geojson',
+                        'data': {
+                            'type': 'FeatureCollection',
+                            'features': [
+                                {
+                                    // feature for Mapbox DC
+                                    'type': 'Feature',
+                                    'geometry': {
+                                        'type': 'Point',
+                                        'coordinates': [
+                                            "{{airport.0.longitude_deg|safe}}",
+                                            "{{airport.0.latitude_deg|safe}}"
+                                        ]
+                                    },
+                                    'properties': {
+                                        'title': '{{airport.0.icao_code}}'
+                                    }
+                                },
+                            ]
+                        }
+                    });
+    
+                    // Add a symbol layer
+                    map.addLayer({
+                        'id': 'points',
+                        'type': 'symbol',
+                        'source': 'points',
+                        'layout': {
+                            'icon-image': 'custom-marker',
+                            // get the title name from the source's "title" property
+                            'text-field': ['get', 'title'],
+                            'text-font': [
+                                'Open Sans Semibold',
+                                'Arial Unicode MS Bold'
+                            ],
+                            'text-offset': [0, 1.25],
+                            'text-anchor': 'top'
+                        }
+                    });
+                }
+            );
+        });
+    </script>
+    {% endif %}
+    <script>
+        $(document).ready( function () {
+
+            $('#notam-table').DataTable({"order": [[ 3, "desc" ]]});
+        } );  
+    </script>
+    <script>
+        var weather_table;
+        $(document).ready( function () {
+            weather_table = $('#weather-table').DataTable({"ordering": false});
+            
+        } );    
+
+
+    </script>
+    <script>
+
+
+
+            
+        
+    </script>
+    {% if request.resolver_match.url_name == "specific_airport_arrivals" %}
+        <script>
+            var today = new Date();
+            let tomorrow = new Date()
+            tomorrow.setDate(today.getDate() + 1)
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            var ddtomorrow = String(tomorrow.getDate()).padStart(2, '0');
+            var mmtomorrow = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyytomorrow = tomorrow.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            tomorrow = yyyytomorrow + '-' + mmtomorrow + '-' + ddtomorrow;
+            
+            $.ajax({
+                 url: "/airport_arrivals_data?iata={{airport.0.iata_code}}&icao={{airport.0.icao_code}}&name={{airport.0.name}}&today="+today+"&tomorrow="+tomorrow, 
+                success: function(result){
+                    const arrival_schedule = JSON.stringify(result);
+                  
+                    const parsed = JSON.parse(arrival_schedule);
+                    parsed.forEach(function(obj) { 
+                        //se abbiamo i divisori
+                        console.log(obj.arrival_date)
+                        if(obj.arrival_date == "today"){
+                            console.log("si");
+                            $("#arrivals-body").append('<tr>');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding date-marker-row" colspan=6><p class="vertical-align-table">{{ today_formatted }}</p></td>');
+                            
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" hidden></td>');
+                            
+
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" hidden></td>');
+                         
+                                
+                                $("#arrivals-body").append('<td class="cell-padding" hidden></td>');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" hidden></td>');
+                                $("#arrivals-body").append('</tr>');
+                        }else if(obj.arrival_date == "tomorrow"){
+                            $("#arrivals-body").append('<tr>');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding date-marker-row" colspan=6"><p class="vertical-align-table">{{ tomorrow_formatted }}</p></td>');
+                            
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" hidden></td>');
+                         
+
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" hidden></td>');
+                         
+                                
+                                $("#arrivals-body").append('<td class="cell-padding" hidden></td> ');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding"hidden ></td>');
+                                $("#arrivals-body").append('</tr>');
+                        }else{
+                            $("#arrivals-body").append('<tr>');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding"><p hidden>'+obj.arrival_date+'</p><p class="vertical-align-table">'+obj.arrival_time+'</p></td>');
+                            
+                                $("#arrivals-body").append('<td class="align-middle cell-padding"><p class="vertical-align-table">'+obj.flight_no+'</p></td>');
+                            
+                                if(obj.icao != ""){
+                                    $("#arrivals-body").append('<td class="align-middle cell-padding"><p class="vertical-align-table">'+obj.from_name+' (<a href="../../'+obj.from_icao+'/">'+obj.from_icao+'</a>)</p></td>');
+                                }else{
+                                    $("#arrivals-body").append('<td class="align-middle cell-padding"><p class="vertical-align-table">('+obj.from_iata+')</p></td>');
+                                }
+                            
+                               if(obj.airline!=""){
+                                $("#arrivals-body").append("<td class=\"cell-padding\"><img class=\"airline-logo-img\" src=\"/static/images/airline_logos/"+obj.airline+".png\"></td>");
+                               }else{
+                                $("#arrivals-body").append("<td class=\"cell-padding\"></td>");
+                               }
+                               
+                               //Set status icon style
+                               var status_icon = "";
+                               var status_color="";
+                               if(obj.flight_status == "Scheduled"){
+                                    status_icon = "calendar_today";
+                                    
+                               }else if(obj.flight_status.includes("Estimated")){
+                                   status_icon = "flight_land"
+                               }else if(obj.flight_status == "Arrived"){
+                                    status_icon = "luggage"
+                               }
+                               //Set status color style
+                               if(obj.flight_time_desc == "On time"){
+                                    status_color="#212529";
+                               }else if(obj.flight_time_desc == "Small delay"){
+                                    status_color = "#ffe812"
+                               }else{
+                                    status_color="#c60202"
+                               }
+
+                                
+                                $("#arrivals-body").append('<td class="align-middle cell-padding" ><p class="vertical-align-table">'+obj.aircraft+'</p></td>');
+                                $("#arrivals-body").append('<td class="align-middle cell-padding"><p class="vertical-align-table"><span class="material-icons font-size-18" style="color:'+status_color+'">'+status_icon+'</span><br> '+obj.flight_status+'</p></td>');
+                                $("#arrivals-body").append('</tr>');
+                        }
+                        
+                  
+                    } );
+                   
+                    
+                }});
+                
+                
+                
+        </script>
+
+    {% endif %}
+    <script>
+        function display_hide(id){
+            
+            
+            id = id.replace(/\s/g, '');
+            
+            var x = document.getElementById(id);
+            
+            if (x.getAttribute("hidden",true)) {
+                x.removeAttribute("hidden");
+            } else {
+                x.setAttribute("hidden", true);
+                
+            }
+        }
+    
+
+   
+
+    
+</script>
+    {% if request.resolver_match.url_name == "specific_airport_weather" %}
+        <script>
+            var button = document.getElementById("btn-weather");
+            button.classList.add("btn-menu-container-active")
+        </script>
+    {% elif request.resolver_match.url_name == "specific_airport_notam" %}
+        <script>
+            var button = document.getElementById("btn-notam");
+            button.classList.add("btn-menu-container-active")
+        </script>
+    {% elif request.resolver_match.url_name == "general_airport" %}
+    <script>
+        var button = document.getElementById("btn-overview");
+        button.classList.add("btn-menu-container-active")
+    </script>
+    {% elif request.resolver_match.url_name == "specific_airport_arrivals" %}
+        <script>
+            var button = document.getElementById("btn-arrivals");
+            button.classList.add("btn-menu-container-active")
+        </script>
+        {% elif request.resolver_match.url_name == "specific_airport_departures" %}
+        <script>
+            var button = document.getElementById("btn-departures");
+            button.classList.add("btn-menu-container-active")
+        </script>
+    {% endif %}
+    {% endblock %}
+    {% block airport-content %}
+    {% endblock %}
+{% endblock %}

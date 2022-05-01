@@ -1,0 +1,29 @@
+{% load static %}
+{% load airports_extras %}
+{% load mathfilters %}
+
+{% block airport-content %}
+    <br>
+    <h1 class = "airport-title airport-section-title">Live Arrivals</h1>
+    <table class="table table-striped" id="arrivals-table">
+        <thead class="arrivals-head">
+            <tr>
+            <th scope="col" class="arrivals-col">Time</th>
+            <th scope="col" class="arrivals-col">Flight</th>
+            <th scope="col" class="arrivals-col">From</th>
+            <th scope="col" class="arrivals-col">Airline</th>
+            <th scope="col" class="arrivals-col">Aircraft</th>
+            <th scope="col" class="arrivals-col">Status</th>
+            </tr>
+        </thead>
+         <tbody id="arrivals-body">
+           
+          
+        </tbody> 
+        
+        
+    </table>
+    <br>
+    
+{% endblock %}
+    

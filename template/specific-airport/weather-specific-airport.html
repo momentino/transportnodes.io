@@ -1,0 +1,90 @@
+
+{% load static %}
+{% load airports_extras %}
+{% load mathfilters %}
+
+{% block airport-content %}
+    <br>
+    <h1 class = "airport-title airport-section-title">METAR reports for the last 72h</h1>
+    <br>
+    <table class="table table-striped table-bordered" id="weather-table">
+        <thead>
+            <tr>
+            <th scope="col">METAR</th>
+            <th scope="col">UTC DATE/TIME</th>
+            </tr>
+        </thead>
+    
+        
+        {% for report in airport_metar_story.response.data.METAR %}
+            <tr onclick="display_hide('{{report.raw_text}}')">
+                <td class="metar-report">
+                    {{report.raw_text}}
+                </td>
+                <td class="metar-report">
+                    {% with time=report.observation_time|replace:"before=T&after= " %}
+                        {{time|replace:"before=Z&after= "}}
+                    {% endwith %}
+                </td>
+                
+            </tr>
+            <tr id="{{report.raw_text|replace:'before= &after='}}" hidden="true">
+                <td colspan=1 class="metar-expand" >
+                    <p>Station ID: {{report.station_id}}</p>
+                    <p>Temperature: {{report.temp_c}}°C</p>
+                    <p>Pressure: {{report.altim_in_hg|mul:33.86}} hPa</p>
+                    <p>Dew point: {{report.dewpoint_c}}°C</p>
+                    <p>Wind speed: {{report.wind_speed_kt}}kt</p>
+                    <p>Wind direction: {{report.wind_dir_degrees}}°</p>
+                    <p>Visibility: {{report.visibility_statute_mi}} statute miles / {{report.visibility_statute_mi|mul:1.609344}}km</p>
+                    <p hidden>{{report.raw_text|replace:'before= &after='}}</p>
+                    
+                    <!-- Controllo dei parametri che indicano le condizioni del cielo -->
+                    {% if report.sky_condition.sky_cover == "CAVOK" %}
+                        <p>Sky conditions: {{value}} (Clouds and visibility OK) </p>
+                    {% elif report.sky_condition.sky_cover == "SKC" %}
+                        <p>Sky conditions: {{value}} (Sky clear) at {{report.sky_condition.cloud_base_ft_agl}}ft</p>
+                    {% elif report.sky_condition.sky_cover == "FEW" %}
+                        <p>Sky conditions: {{value}} (Few clouds) at {{report.sky_condition.cloud_base_ft_agl}}ft</p>
+                    {% elif report.sky_condition.sky_cover == "SCT" %}
+                        <p>Sky conditions: {{value}} (Scattered clouds) at {{report.sky_condition.cloud_base_ft_agl}}ft</p>
+                    {% elif report.sky_condition.sky_cover == "BKN" %}
+                        <p>Sky conditions: {{value}} (Broken clouds) at {{report.sky_condition.cloud_base_ft_agl}}ft</p>
+                    {% elif report.sky_condition.sky_cover == "OVC" %}
+                        <p>Sky conditions: {{value}} (Overcast) at {{report.sky_condition.cloud_base_ft_agl}}ft</p>
+                    {% elif report.sky_condition.sky_cover == "CLR" %}
+                        <p>Sky conditions: {{value}} (Clear)</p>
+                
+                    {% else %}
+                        
+                        {% for element in report.sky_condition %}
+
+                            {% if element.sky_cover == "CAVOK" %}
+                                <p>Sky conditions: {{value}} (Clouds and visibility OK)</p>
+                            {% elif element.sky_cover == "SKC" %}
+                                <p>Sky conditions: {{value}} (Sky clear) at {{element.cloud_base_ft_agl}}ft</p>
+                            {% elif element.sky_cover == "FEW" %}
+                                <p>Sky conditions: {{value}} (Few clouds) at {{element.cloud_base_ft_agl}}ft</p>
+                            {% elif element.sky_cover == "SCT" %}
+                                <p>Sky conditions: {{value}} (Scattered clouds) at {{element.cloud_base_ft_agl}}ft</p>
+                            {% elif element.sky_cover == "BKN" %}
+                                <p>Sky conditions: {{value}} (Broken clouds) at {{element.cloud_base_ft_agl}}ft</p>
+                            {% elif element.sky_cover == "OVC" %}
+                                <p>Sky conditions: {{value}} (Overcast) at {{element.cloud_base_ft_agl}}ft</p>
+                            {% elif element.sky_cover == "CLR" %}
+                                <p>Sky conditions: {{value}} (Clear)</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {% if report.wx_string != None %}
+                        <p> Meteo descriptor: {{report.wx_string}}
+                        </p>
+                    {% endif %}
+
+                </td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+{% load airports_extras %}
+{% load mathfilters %}
+
+{% block airport-content %}
+    <br>
+    <h1 class = "airport-title airport-section-title">Most recently issued NOTAMs for {{airport.0.icao_code}}</h1>
+    <br>
+    <table class="table table-striped table-bordered" id="notam-table">
+        <thead>
+            
+            <tr>
+            <th scope="col">Identifier</th>
+            <th scope="col">Location</th>
+            <th scope="col">Description</th>
+            <th scope="col">Start date</th>
+            <th scope="col">End date</th>
+            </tr>
+        </thead>
+        {% for notam in notam_data.rows %}
+        <tr>
+            
+                <td><p>{{notam.nof}} {{notam.series}}{{notam.number}}/{{notam.year}}</p></td>
+                <td><p>{{airport.0.icao_code}}</p></td>
+                <td><p>{{notam.iteme|replace:"before='&after= "}}</p></td>
+                <td><p>{{notam.startvalidity|unixtoutctime}}</p></td>
+                <td><p>{{notam.endvalidity|unixtoutctime}}</p></td>
+            </tr>
+        {% endfor %}
+        
+    </table>
+    {% endblock %}

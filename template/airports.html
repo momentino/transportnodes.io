@@ -1,0 +1,708 @@
+{% extends "transportation-base.html" %}
+{% load static %}
+{% load airports_extras %}
+
+
+
+{% block content %}
+<div class="general-container">
+  <div class="content">
+    <div class="central-panel">
+      <h1 class = "text-center country-section-title" id="top">Airports by country</h1>
+
+      <nav class="navbar navbar-expand-lg navbar-menu">
+                        
+        <button class="navbar-toggler navbar-toggler-airport-menu collapse-button ml-auto" type="button" data-toggle="collapse" data-target="#navbarAirportPageMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+            <span class="material-icons">
+              menu
+            </span>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse navbar-collapse-airport-menu navbar-center">
+          <div class="btn-menu-container navb-wrap-l">
+            <a  class="navbar-brand page-menu-button navb-l" href='#a'>A</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#b'>B</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#c'>C</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#d'>D</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#e'>E</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#f'>F</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#g'>G</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#h'>H</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#i'>I</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#j'>J</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#k'>K</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#l'>L</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#m'>M</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#n'>N</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#o'>O</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#p'>P</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#q'>Q</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#r'>R</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#s'>S</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#t'>T</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#u'>U</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#v'>V</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#w'>W</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#y'>Y</a>
+          </div>
+          <div class="btn-menu-container navb-wrap-r">
+            <a  class="navbar-brand page-menu-button navb-r" href='#z'>Z</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+    <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">A</h1>
+          
+           <a href="#top" class="top-icon" id="a"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+          
+       
+          {% for items in A_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>         
+              <div class="col bottom-line">
+                <a href= '{{items.urlname}}'>{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">B</h1>
+          
+           <a href="#top" class="top-icon" id="b"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in B_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href='{{items.urlname}}'>{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">C</h1>
+          
+           <a href="#top" class="top-icon" id="c"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in C_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col airport-entry">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">D</h1>
+          
+           <a href="#top" class="top-icon" id="d"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in D_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">E</h1>
+          
+           <a href="#top" class="top-icon" id="e"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in E_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">F</h1>
+          
+           <a href="#top" class="top-icon" id="f"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in F_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">G</h1>
+          
+           <a href="#top" class="top-icon" id="g"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in G_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title" id="h">H</h1>
+          
+           <a href="#top" class="top-icon"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in H_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title" id="i">I</h1>
+          
+           <a href="#top" class="top-icon"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in I_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">J</h1>
+          
+           <a href="#top" class="top-icon" id="j"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in J_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">K</h1>
+          
+           <a href="#top" class="top-icon" id="k"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in K_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">L</h1>
+          
+           <a href="#top" class="top-icon" id="l"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in L_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">M</h1>
+          
+           <a href="#top" class="top-icon" id="m"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in M_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">N</h1>
+          
+           <a href="#top" class="top-icon" id="n"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in N_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">O</h1>
+          
+           <a href="#top" class="top-icon" id="o"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in O_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">P</h1>
+          
+           <a href="#top" class="top-icon" id="p"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in P_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">Q</h1>
+          
+           <a href="#top" class="top-icon" id="q"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in Q_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">R</h1>
+          
+           <a href="#top" class="top-icon" id="r"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in R_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">S</h1>
+          
+           <a href="#top" class="top-icon" id="s"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in S_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">T</h1>
+          
+           <a href="#top" class="top-icon" id="t"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in T_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">U</h1>
+          
+           <a href="#top" class="top-icon" id="u"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in U_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">V</h1>
+          
+           <a href="#top" class="top-icon" id="v"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in V_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">W</h1>
+          
+           <a href="#top" class="top-icon" id="w"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in W_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">Y</h1>
+          
+           <a href="#top" class="top-icon" id="y"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in Y_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="country-panel">
+        <div class="letter-header">
+          <h1 class="airport-title letter-title">Z</h1>
+          
+           <a href="#top" class="top-icon" id="z"><span class="material-icons top-icon" data-toggle="tooltip" data-placement="top" title="Go to the top">expand_less</span></a> 
+           
+        </div>
+        {% for items in Z_list %}
+            <div class="row">
+              <div class="col-1 flag">
+                <img
+                src="https://flagcdn.com/256x192/{{items.iso}}.png"
+                width="256"
+                height="192">
+              </div>          
+              <div class="col bottom-line">
+                <a href="{{items.urlname}}">{{items.nicename}}</a>
+              </div>
+              <div class="col bottom-line">
+                <p>{{items.count}}</p>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+  </div>
+  </div>
+</div>
+
+{% endblock %}

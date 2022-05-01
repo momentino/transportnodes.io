@@ -1,0 +1,6 @@
+thetransportmap/settings.py
+venv
+__pycache__
+geckodriver.log
+tempCodeRunnerFile.c
+config_private

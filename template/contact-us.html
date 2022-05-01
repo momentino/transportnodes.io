@@ -1,0 +1,30 @@
+
+{% extends "transportation-base.html" %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="general-container">
+        <div class="content">
+        <div class="central-panel">
+            <h1 class = "text-center country-section-title" id="top">Contact us</h1>
+            
+      </div>
+      <div class="contact-us-content">
+        <p id="contact-disclaimer">Feel free to contact us through this form whenever you have a question regarding the website.</p>
+        <form method="post" id="contact-form">
+            {% csrf_token %}
+            
+                        <!-- append to an attribute -->
+            {% render_field form.subject class+="contact-input-field" placeholder=form.subject.label %}
+            {% render_field form.name class+="contact-input-field" placeholder=form.name.label %}
+            {% render_field form.email class+="contact-input-field" placeholder=form.email.label %}
+            {% render_field form.message placeholder=form.message.label %}
+            
+            <input type="submit" value="Send" id="contact-submit">
+        </form>
+      </div>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+{% load airports_extras %}
+{% load mathfilters %}
+
+{% block airport-content %}
+    <br>
+    <h1 class = "airport-title airport-section-title">Airport Overview</h1>
+    <div class="welcome-to-airport">
+        <p class="">
+            Welcome to {{airport.0.name}}!<br>
+            Explore our portal and get useful information regarding:
+            <ul>
+                <li>Location</li>
+                <li>Scheduled and live arrivals and departures</li>
+                <li>Weather</li>
+                <li>NOTAMs</li>
+            </ul>
+            
+        </p>
+        <p>...more coming soon!</p>
+    </div>
+    
+
+    <br>
+    {% endblock %}
+    
